@@ -21,6 +21,7 @@
 # SOFTWARE.
 """yav's package core implementation."""
 
+from itertools import starmap
 import re
 from typing import Union
 
@@ -45,7 +46,7 @@ class YAVOutOfBoundariesError(BaseYAVException):
     pass
 
 
-class YAVRepetitiveDigitsError(BaseYAVException):
+class YAVRepeatedDigitApartedByOneError(BaseYAVException):
     """Exception for specific rule about content values."""
     pass
 
@@ -81,10 +82,39 @@ class YAValidator:
                     "a sequence of six ASCII digits"
                     .format(value)
                 )
-        elif isinstance(value, int):
-            if value < 100000 or value >= 999999:
-                raise YAVOutOfBoundariesError(
-                    "{0} is an int parameter but should be "
-                    "between 100000 (inclusive) and 999999 (exclusive)"
-                    .format(value)
+
+        value_as_int = int(value)
+
+        if value_as_int < 100000 or value_as_int >= 999999:
+            raise YAVOutOfBoundariesError(
+                "{0} is an int parameter but should be "
+                "between 100000 (inclusive) and 999999 (exclusive)"
+                .format(value_as_int)
+            )
+
+        value_as_str = str(value)
+
+        # Actual repeated digit validator for one pair of digits
+        pair_validator = lambda one, another: one != another
+
+        # Actual pair validation:
+        # applies to every pair of digits aparted by one digit,
+        # returning True if all pairs are validated
+        all_pairs_validated = all(
+            list(
+                starmap(
+                    pair_validator,
+                    zip(
+                        value_as_str[0:4:1],
+                        value_as_str[2:6:1],
+                    )
                 )
+            )
+        )
+
+        if not all_pairs_validated:
+            raise YAVRepeatedDigitApartedByOneError(
+                "{0} should not have a repeated digit aparted by"
+                " one digit (e.g. 12145 and 12325)"
+                .format(value_as_str)
+            )

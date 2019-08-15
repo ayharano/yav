@@ -26,6 +26,7 @@ from unittest import TestCase
 from yav import (
     YAValidator,
     YAVInputTypeError,
+    YAVPatternMatchError,
     YAVOutOfBoundariesError,
     YAVRepetitiveDigitsError,
 )
@@ -69,7 +70,23 @@ class TestInputOutput(TestCase):
 
     def test_input_invalid_str(self):
         """str are valid input if expected pattern matches."""
-        pass
+
+        for invalid_match_instance in (
+                '123.456',
+                '987,654',
+                'cent vingt trois mil cinq cent soixant-sept'
+        ):
+
+            with self.subTest(value=invalid_match_instance):
+                with self.assertRaisesRegex(
+                        YAVPatternMatchError,
+                        r"{0} expected to be a str composed by "
+                        r"a sequence of six ASCII digits"
+                        .format(re.escape(str(invalid_match_instance))),
+                        msg="{0} should raise an Exception"
+                        .format(invalid_match_instance),
+                ):
+                    self.validator(value=invalid_match_instance)
 
     def test_input_str_out_of_boundaries(self):
         """Verify if str input is within expected boundaries."""

@@ -88,28 +88,6 @@ class TestInputOutput(TestCase):
                 ):
                     self.validator(value=invalid_match_instance)
 
-    def test_input_str_out_of_boundaries(self):
-        """Verify if str input is within expected boundaries."""
-
-        for out_of_boundaries_str in (
-                '0',
-                '42',
-                '999999',
-                '1000000',
-                '1234567',
-        ):
-
-            with self.subTest(value=out_of_boundaries_str):
-                with self.assertRaisesRegex(
-                        YAVOutOfBoundariesError,
-                        r"{0} is an int parameter but should be "
-                        r"between 100000 \(inclusive\) and 999999 \(exclusive\)"
-                        .format(out_of_boundaries_str),
-                        msg="{0} should raise an Exception"
-                        .format(out_of_boundaries_str),
-                ):
-                    self.validator(value=out_of_boundaries_str)
-
     def test_input_int_out_of_boundaries(self):
         """Verify if int input is within expected boundaries."""
 

@@ -67,3 +67,10 @@ class YAValidator:
                 "{0} should be either an int or str"
                 .format(value)
             )
+
+        if value < 100000 or value >= 999999:
+            raise YAVOutOfBoundariesError(
+                "{0} is an int parameter but should be "
+                "between 100000 (inclusive) and 999999 (exclusive)"
+                .format(value)
+            )

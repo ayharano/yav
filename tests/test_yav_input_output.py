@@ -103,8 +103,9 @@ class TestInputOutput(TestCase):
             with self.subTest(value=out_of_boundaries_int):
                 with self.assertRaisesRegex(
                         YAVOutOfBoundariesError,
-                        r"{0} is an int parameter but should be "
-                        r"between 100000 \(inclusive\) and 999999 \(exclusive\)"
+                        r"{0} is an int parameter but should be"
+                        r" between 100000 \(inclusive\) and"
+                        r" 999999 \(exclusive\)"
                         .format(out_of_boundaries_int),
                         msg="{0} should raise an Exception"
                         .format(out_of_boundaries_int),
@@ -116,14 +117,15 @@ class TestInputOutput(TestCase):
 
         for repeated_digit_aparted_by_one_int in (
                 121426,
-                523563,
+                552523,
         ):
 
             with self.subTest(value=repeated_digit_aparted_by_one_int):
                 with self.assertRaisesRegex(
                         YAVRepeatedDigitApartedByOneError,
-                        r"{0} should not have a repeated digit "
-                        r" aparted by one digit \(e\.g\. 12145 and 12325\)"
+                        r"{0} should not have a repeated digit"
+                        r" aparted by one digit"
+                        r" \(e\.g\. 12145 and 12325\)"
                         .format(repeated_digit_aparted_by_one_int),
                         msg="{0} should raise an Exception"
                         .format(repeated_digit_aparted_by_one_int),
@@ -135,14 +137,15 @@ class TestInputOutput(TestCase):
 
         for repeated_digit_aparted_by_one_str in (
                 '121426',
-                '523563',
+                '552523',
         ):
 
             with self.subTest(value=repeated_digit_aparted_by_one_str):
                 with self.assertRaisesRegex(
                         YAVRepeatedDigitApartedByOneError,
-                        r"{0} should not have a repeated digit "
-                        r" aparted by one digit \(e\.g\. 12145 and 12325\)"
+                        r"{0} should not have a repeated digit"
+                        r" aparted by one digit"
+                        r" \(e\.g\. 12145 and 12325\)"
                         .format(repeated_digit_aparted_by_one_str),
                         msg="{0} should raise an Exception"
                         .format(repeated_digit_aparted_by_one_str),
@@ -151,8 +154,28 @@ class TestInputOutput(TestCase):
 
     def test_input_expected_int_values(self):
         """int values which should pass."""
-        pass
+
+        for valid_int in (
+                523563,
+                112233,
+        ):
+            with self.subTest(value=valid_int):
+                self.assertIsNone(
+                    self.validator(value=valid_int),
+                    msg="{0} should be a valid parameter"
+                    .format(valid_int)
+                )
 
     def test_input_expected_str_values(self):
         """str values which should pass."""
-        pass
+
+        for valid_str in (
+                '523563',
+                '112233',
+        ):
+            with self.subTest(value=valid_str):
+                self.assertIsNone(
+                    self.validator(value=valid_str),
+                    msg="{0} should be a valid parameter"
+                    .format(valid_str)
+                )

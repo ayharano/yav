@@ -19,18 +19,29 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""yav's package initializer."""
-from .core import (
-    YAValidator,
-    YAVInputTypeError,
-    YAVOutOfBoundariesError,
-    YAVRepetitiveDigitsError,
-)
+"""yav's package core implementation."""
 
 
-def main():
+class YAValidator:
+    """Custom hardcoded set of rules validator."""
     pass
 
 
-if __name__ == '__main__':
-    main()
+class BaseYAVException(Exception):
+    """All yav Exceptions should be derived from this."""
+    pass
+
+
+class YAVInputTypeError(BaseYAVException):
+    """Exception for invalid input type."""
+    pass
+
+
+class YAVOutOfBoundariesError(BaseYAVException):
+    """Exception for input out of rules' boundaries."""
+    pass
+
+
+class YAVRepetitiveDigitsError(BaseYAVException):
+    """Exception for specific rule about content values."""
+    pass

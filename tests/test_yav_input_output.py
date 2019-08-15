@@ -85,11 +85,9 @@ class TestInputOutput(TestCase):
             with self.subTest(value=out_of_boundaries_str):
                 with self.assertRaisesRegex(
                         YAVOutOfBoundariesError,
-                        re.escape(
-                            "{0} is an str parameter but should be "
-                            "between 100000 (inclusive) and 999999 (exclusive)"
-                            .format(out_of_boundaries_str)
-                        ),
+                        r"{0} is an int parameter but should be "
+                        r"between 100000 \(inclusive\) and 999999 \(exclusive\)"
+                        .format(out_of_boundaries_str),
                         msg="{0} should raise an Exception"
                         .format(out_of_boundaries_str),
                 ):
@@ -110,11 +108,9 @@ class TestInputOutput(TestCase):
             with self.subTest(value=out_of_boundaries_int):
                 with self.assertRaisesRegex(
                         YAVOutOfBoundariesError,
-                        re.escape(
-                            "{0} is an int parameter but should be "
-                            "between 100000 (inclusive) and 999999 (exclusive)"
-                            .format(out_of_boundaries_int)
-                        ),
+                        r"{0} is an int parameter but should be "
+                        r"between 100000 \(inclusive\) and 999999 \(exclusive\)"
+                        .format(out_of_boundaries_int),
                         msg="{0} should raise an Exception"
                         .format(out_of_boundaries_int),
                 ):

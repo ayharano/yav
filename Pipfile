@@ -5,6 +5,8 @@ verify_ssl = true
 
 [dev-packages]
 setuptools = "*"
+pylint = "*"
+flake8 = "*"
 
 [packages]
 yav = {editable = true,path = "."}

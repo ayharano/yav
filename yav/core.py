@@ -87,10 +87,10 @@ class YAValidator:
 
         value_as_int = int(value)
 
-        if value_as_int < 100000 or value_as_int >= 999999:
+        if value_as_int <= 100000 or value_as_int >= 999999:
             raise YAVOutOfBoundariesError(
                 "{0} is an int parameter but should be "
-                "between 100000 (inclusive) and 999999 (exclusive)"
+                "between 100000 (exclusive) and 999999 (exclusive)"
                 .format(value_as_int)
             )
 

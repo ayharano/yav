@@ -63,9 +63,11 @@ class YAValidator:
         Raises:
             YAVInputTypeError:
                 Invalid input type.
+            YAVPatternMatchError:
+                Invalid pattern for str input.
             YAVOutOfBoundariesError:
                 Content value outside of expected boundaries.
-            YAVRepetitiveDigitsError:
+            YAVRepeatedDigitApartedByOneError:
                 Repetitive digits found in content value.
         """
 

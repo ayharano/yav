@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 """Basic test cases for yav."""
+import re
 from unittest import TestCase
 
 from yav import (
@@ -32,9 +33,10 @@ from yav import (
 
 class TestInputOutput(TestCase):
     """Basic test cases for pair of expected input/output."""
+
     def setUp(self):
         """Cases setup method."""
-        pass
+        self.validator = YAValidator()
 
     def tearDown(self):
         """Cases finally like method."""
@@ -42,7 +44,29 @@ class TestInputOutput(TestCase):
 
     def test_input_invalid_type(self):
         """Only int and str are expected."""
-        pass
+
+        for invalid_type_instance in (
+                0.,
+                0.j,
+                [],
+                (),
+                range(0),
+                set({}),
+                frozenset({}),
+                {},
+                None,
+        ):
+
+            with self.subTest(value=invalid_type_instance):
+                with self.assertRaisesRegex(
+                        YAVInputTypeError,
+                        r"{0} should be either an int or str"
+                        .format(re.escape(str(invalid_type_instance))),
+                        msg="{0} should raise an Exception"
+                        .format(invalid_type_instance),
+                ):
+                    self.validator(value=invalid_type_instance)
+
 
     def test_input_invalid_str(self):
         """str are valid input if expected pattern matches."""

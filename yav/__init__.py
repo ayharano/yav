@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 """yav's package initializer."""
+from .cli import cli
 from .core import (
     YAValidator,
     YAVInputTypeError,
@@ -29,8 +30,7 @@ from .core import (
 )
 
 
-def main():
-    pass
+main = cli
 
 
 if __name__ == '__main__':

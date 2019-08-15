@@ -28,7 +28,7 @@ from yav import (
     YAVInputTypeError,
     YAVPatternMatchError,
     YAVOutOfBoundariesError,
-    YAVRepetitiveDigitsError,
+    YAVRepeatedDigitApartedByOneError,
 )
 
 
@@ -110,6 +110,44 @@ class TestInputOutput(TestCase):
                         .format(out_of_boundaries_int),
                 ):
                     self.validator(value=out_of_boundaries_int)
+
+    def test_input_repeated_digit_aparted_by_one_int_values(self):
+        """int input which should not pass because of repetition rule."""
+
+        for repeated_digit_aparted_by_one_int in (
+                121426,
+                523563,
+        ):
+
+            with self.subTest(value=repeated_digit_aparted_by_one_int):
+                with self.assertRaisesRegex(
+                        YAVRepeatedDigitApartedByOneError,
+                        r"{0} should not have a repeated digit "
+                        r" aparted by one digit \(e\.g\. 12145 and 12325\)"
+                        .format(repeated_digit_aparted_by_one_int),
+                        msg="{0} should raise an Exception"
+                        .format(repeated_digit_aparted_by_one_int),
+                ):
+                    self.validator(value=repeated_digit_aparted_by_one_int)
+
+    def test_input_repeated_digit_aparted_by_one_str_values(self):
+        """str input which should not pass because of apart repeated rule."""
+
+        for repeated_digit_aparted_by_one_str in (
+                '121426',
+                '523563',
+        ):
+
+            with self.subTest(value=repeated_digit_aparted_by_one_str):
+                with self.assertRaisesRegex(
+                        YAVRepeatedDigitApartedByOneError,
+                        r"{0} should not have a repeated digit "
+                        r" aparted by one digit \(e\.g\. 12145 and 12325\)"
+                        .format(repeated_digit_aparted_by_one_str),
+                        msg="{0} should raise an Exception"
+                        .format(repeated_digit_aparted_by_one_str),
+                ):
+                    self.validator(value=repeated_digit_aparted_by_one_str)
 
     def test_input_expected_int_values(self):
         """int values which should pass."""

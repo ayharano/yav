@@ -21,6 +21,7 @@
 # SOFTWARE.
 """yav's package core implementation."""
 
+import re
 from typing import Union
 
 
@@ -31,6 +32,11 @@ class BaseYAVException(Exception):
 
 class YAVInputTypeError(BaseYAVException):
     """Exception for invalid input type."""
+    pass
+
+
+class YAVPatternMatchError(BaseYAVException):
+    """Exception for invalid pattern for str input."""
     pass
 
 
@@ -68,11 +74,17 @@ class YAValidator:
                 .format(value)
             )
 
-        value = int(value)
-
-        if value < 100000 or value >= 999999:
-            raise YAVOutOfBoundariesError(
-                "{0} is an int parameter but should be "
-                "between 100000 (inclusive) and 999999 (exclusive)"
-                .format(value)
-            )
+        if isinstance(value, str):
+            if not re.search(r'[1-9][0-9]{5}', str(value)):
+                raise YAVPatternMatchError(
+                    "{0} expected to be a str composed by "
+                    "a sequence of six ASCII digits"
+                    .format(value)
+                )
+        elif isinstance(value, int):
+            if value < 100000 or value >= 999999:
+                raise YAVOutOfBoundariesError(
+                    "{0} is an int parameter but should be "
+                    "between 100000 (inclusive) and 999999 (exclusive)"
+                    .format(value)
+                )

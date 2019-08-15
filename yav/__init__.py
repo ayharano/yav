@@ -24,6 +24,7 @@ from .core import (
     YAValidator,
     YAVInputTypeError,
     YAVOutOfBoundariesError,
+    YAVPatternMatchError,
     YAVRepetitiveDigitsError,
 )
 

@@ -28,8 +28,7 @@ from .core import YAValidator, BaseYAVException
 
 
 
-RAW_DESCRIPTION = (
-"""
+RAW_DESCRIPTION = (r"""
 __   __   _
 \ \ / /__| |_
  \ V / _ \ __|
@@ -59,8 +58,7 @@ if each given parameter is valid against the following rules:
  (i) an integer bigger than 100_000 and smaller than 999_999, and
 
  (ii) digits cannot be repeated aparted by one digit (e.g.: 12145; 12325).
-"""
-)
+""")
 
 
 
@@ -68,10 +66,6 @@ def cli(args=None):
 
     if args is None:
         args = sys.argv[1:]
-
-    description = (
-    )
-
 
     parser = ArgumentParser(
         formatter_class=RawDescriptionHelpFormatter,

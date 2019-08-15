@@ -78,7 +78,28 @@ class TestInputOutput(TestCase):
 
     def test_input_int_out_of_boundaries(self):
         """Verify if int input is within expected boundaries."""
-        pass
+
+        for out_of_boundaries_int in (
+                -42,
+                0,
+                42,
+                999999,
+                1000000,
+                1234567,
+        ):
+
+            with self.subTest(value=out_of_boundaries_int):
+                with self.assertRaisesRegex(
+                        YAVOutOfBoundariesError,
+                        re.escape(
+                            "{0} is an int parameter but should be "
+                            "between 100000 (inclusive) and 999999 (exclusive)"
+                            .format(out_of_boundaries_int)
+                        ),
+                        msg="{0} should raise an Exception"
+                        .format(out_of_boundaries_int),
+                ):
+                    self.validator(value=out_of_boundaries_int)
 
     def test_input_expected_int_values(self):
         """int values which should pass."""

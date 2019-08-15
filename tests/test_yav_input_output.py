@@ -95,6 +95,8 @@ class TestInputOutput(TestCase):
                 -42,
                 0,
                 42,
+                99999,
+                100000,
                 999999,
                 1000000,
                 1234567,
@@ -104,7 +106,7 @@ class TestInputOutput(TestCase):
                 with self.assertRaisesRegex(
                         YAVOutOfBoundariesError,
                         r"{0} is an int parameter but should be"
-                        r" between 100000 \(inclusive\) and"
+                        r" between 100000 \(exclusive\) and"
                         r" 999999 \(exclusive\)"
                         .format(out_of_boundaries_int),
                         msg="{0} should raise an Exception"

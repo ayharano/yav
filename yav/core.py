@@ -21,10 +21,7 @@
 # SOFTWARE.
 """yav's package core implementation."""
 
-
-class YAValidator:
-    """Custom hardcoded set of rules validator."""
-    pass
+from typing import Union
 
 
 class BaseYAVException(Exception):
@@ -45,3 +42,28 @@ class YAVOutOfBoundariesError(BaseYAVException):
 class YAVRepetitiveDigitsError(BaseYAVException):
     """Exception for specific rule about content values."""
     pass
+
+
+class YAValidator:
+    """Custom hardcoded set of rules validator."""
+
+    def __call__(self, value: Union[int, str]) -> None:
+        """Raises a BaseYAVException if not valid, None otherwise.
+
+        Args:
+            value: value to be validated against rules.
+
+        Raises:
+            YAVInputTypeError:
+                Invalid input type.
+            YAVOutOfBoundariesError:
+                Content value outside of expected boundaries.
+            YAVRepetitiveDigitsError:
+                Repetitive digits found in content value.
+        """
+
+        if not isinstance(value, (int, str)):
+            raise YAVInputTypeError(
+                "{0} should be either an int or str"
+                .format(value)
+            )
